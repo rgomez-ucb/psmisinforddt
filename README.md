@@ -2,6 +2,5 @@
 Template repository for COMPSS-211 Final Projects
 ## Group members: Shun, Ruben, Jiyang and Yucheng.
 
-### My name is Shun.
-I make efforts not to fall behind!
-Today is the deadline.
+## Instruction
+This is the repository where we should work!
