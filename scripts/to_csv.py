@@ -1,5 +1,5 @@
 import pandas as pd
-
+# CHANGE FILEPATH
 jsonl_file = "C:/Users/16082/Desktop/class_project/PoliticalDiscussion_cleaned.jsonl"
 csv_file = "reddit_comments.csv"
 
