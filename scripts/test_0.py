@@ -15,6 +15,7 @@ keep_fields = [
     "controversiality",
     "ups",
     "body",
+    "flair_text"
 ]
 
 count_in, count_out = 0, 0
