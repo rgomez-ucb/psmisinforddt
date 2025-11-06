@@ -3,6 +3,13 @@
 # Import necessary libraries
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
+import os
+
+# Set working directory
+current_directory = os.getcwd()
+print(f"Current working directory (os.getcwd()): {current_directory}")
+new_directory_path = "/Users/mshun/Desktop/class_project"  # Change this to your target directory
+os.chdir(new_directory_path)
 
 # Load the dataset
 input_csv = "reddit_sample.csv"
@@ -10,7 +17,7 @@ df = pd.read_csv(input_csv)
 
 # Initialize the TF-IDF Vectorizer
 # To tackle MemoryError, limit max features and set min_df and max_df
-vectorizer = TfidfVectorizer(max_features=1000, min_df=5, max_df=0.8, stop_words='english') # change parameters as needed
+vectorizer = TfidfVectorizer(max_features=10, min_df=5, max_df=0.8, stop_words='english') # change parameters as needed
 
 # Fit and transform the 'body' column
 # First, Null in "body" change to empty string
