@@ -1,42 +1,28 @@
-import json
-#change the path to your own path
-#get the data from using the torrent
-input_path = "C:/Users/16082/Desktop/class_project/PoliticalDiscussion_comments"
-output_path = "C:/Users/16082/Desktop/class_project/PoliticalDiscussion_cleaned.jsonl"
+# This script is to calculate TF-IDF for text data
 
-# thing we want to keep
-keep_fields = [
-    "subreddit",
-    "created_utc",
-    "link_id",
-    "score",
-    "id",
-    "downs",
-    "controversiality",
-    "ups",
-    "body",
-    "flair_text"
-]
+# Import necessary libraries
+from sklearn.feature_extraction.text import TfidfVectorizer
+import pandas as pd
 
-count_in, count_out = 0, 0
+# Load the dataset
+input_csv = "reddit_sample.csv"
+df = pd.read_csv(input_csv)
 
-with open(input_path, "r", encoding="utf-8") as fin, open(output_path, "w", encoding="utf-8") as fout:
-    for line in fin:
-        count_in += 1
-        try:
-            data = json.loads(line)
-            body = data.get("body", "")
-            # skip deleted or removed comments, remove later
-            if body in ("[deleted]", "[removed]", None, ""):
-                continue
-            # keep only the fields we want
-            clean_data = {k: data.get(k, None) for k in keep_fields}
+# Initialize the TF-IDF Vectorizer
+# To tackle MemoryError, limit max features and set min_df and max_df
+vectorizer = TfidfVectorizer(max_features=1000, min_df=5, max_df=0.8, stop_words='english') # change parameters as needed
 
-            fout.write(json.dumps(clean_data, ensure_ascii=False) + "\n")
-            count_out += 1
+# Fit and transform the 'body' column
+# First, Null in "body" change to empty string
+df['body'] = df['body'].fillna("") 
+tfidf_matrix = vectorizer.fit_transform(df['body'])
+# To reduce memory usage, convert to sparse DataFrame
+tfidf_df_sparse = pd.DataFrame.sparse.from_spmatrix(tfidf_matrix, columns=vectorizer.get_feature_names_out())
 
-        except json.JSONDecodeError:
-            continue  # skip error lines
+# Combine TF-IDF features with the original dataframe
+result_df = pd.concat([df.reset_index(drop=True), tfidf_df_sparse.reset_index(drop=True)], axis=1)
 
-print(f"input {count_in:,} lines，output{count_out:,} lines")
-print("Try it out!")
+# Save the result to a new CSV file
+output_csv = "reddit_tfidf.csv"
+result_df.to_csv(output_csv, index=False)
+print("TF-IDF calculation completed and saved to", output_csv)
