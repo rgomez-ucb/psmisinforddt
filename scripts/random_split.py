@@ -2,8 +2,8 @@
 # CHANGE THE FILE PATH
 import pandas as pd
 import numpy as np
-input_csv = "reddit_comments.csv"
-output_csv = "reddit_sample.csv"
+input_csv = "./data/reddit_comments.csv"
+output_csv = "./data/reddit_sample.csv"
 df = pd.read_csv(input_csv,low_memory=False)
 df["created_utc"] = pd.to_datetime(df["created_utc"], errors="coerce")
 df["year"] = df["created_utc"].dt.year
