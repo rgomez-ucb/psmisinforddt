@@ -2,15 +2,23 @@ name: compss211
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
-  - beautifulsoup4>=4.12,<5
-  - datasets>=2.19,<3
-  - nltk>=3.8,<4
-  - pandas>=2.2,<3
-  - requests>=2.32,<3
-  - scikit-learn>=1.5,<2
-  - seaborn>=0.13,<1
-  - spacy>=3.7,<4
+  - python=3.11 # programming language
+  - pip>=23.3,<24 # package installer for Python
+  - beautifulsoup4>=4.12,<5 # library for pulling data out of HTML and XML files
+  - datasets>=2.19,<3 # library for easily accessing and sharing datasets
+  - nltk>=3.8,<4 # natual langauge processing toolkit
+  - numpy>=1.26,<2 # numerical computing
+  - pandas>=2.2,<3 # data manipulation and analysis
+  - requests>=2.32,<3 # HTTP library
+  - scikit-learn>=1.5,<2 # machine learning library for predictive data analysis
+  - seaborn>=0.13,<1 # statistical data visualization
+  - spacy>=3.7,<4 # industrial-strength natural language processing
+  - sqlalchemy>=2.0,<3 # SQL toolkit and Object-Relational Mapping 
+  - bertopic>=0.1.5,<0.2 # topic modeling with BERT embeddings
+  - matplotlib>=3.8,<4 # plotting library
+  - plotly>=5.16,<6 # interactive graphing library
+  - wordcloud>=1.9,<2 # word cloud generator
+  - jupyterlab>=4.0,<5 # web-based interactive development environment
   - pip
   - pip:
       - transformers>=4.43,<5
