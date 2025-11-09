@@ -58,7 +58,7 @@ for chunk_idx, chunk in enumerate(reader):
 
     torch.cuda.empty_cache()
 
-
+# careful !!! if memory issue, run another code. You have saved all the parts already.
 all_parts = [os.path.join(output_dir, f) for f in sorted(os.listdir(output_dir)) if f.endswith(".csv")]
 combined_df = pd.concat((pd.read_csv(f) for f in all_parts), ignore_index=True)
 combined_df.to_csv(final_csv, index=False)
