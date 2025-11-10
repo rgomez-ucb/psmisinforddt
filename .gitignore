@@ -209,3 +209,6 @@ reddit_comments.csv
 
 #sqlthing
 *.db
+
+# csv
+*.csv
