@@ -5,60 +5,78 @@ import numpy as np
 from tqdm import tqdm
 import os
 
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Dev1ce:", device)
 
-
 model_name = 'distilbert-base-uncased'
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModel.from_pretrained(model_name)
-model.to(device)
+model = AutoModel.from_pretrained(model_name).to(device)
 model.eval()
 
-
-def get_bert_embeddings(texts, batch_size=64):
-    all_embeddings = []
+def get_word_embeddings(texts, batch_size=32, max_length=128):
+    all_word_embeddings = []
     for i in tqdm(range(0, len(texts), batch_size), desc="Batches", leave=False):
         batch_texts = texts[i:i+batch_size]
-        encoded = tokenizer(batch_texts,
-                            padding=True,
-                            truncation=True,
-                            max_length=256,
-                            return_tensors='pt').to(device)
+        encoded = tokenizer(batch_texts, padding=True, truncation=True,
+                            max_length=max_length, return_tensors='pt').to(device)
+
         with torch.no_grad():
             outputs = model(**encoded)
-            embeddings = outputs.last_hidden_state[:, 0, :].cpu().numpy().astype('float32')
-        all_embeddings.append(embeddings)
-    return np.concatenate(all_embeddings, axis=0)
+            hidden_states = outputs.last_hidden_state  # (batch, seq_len, hidden)
+
+        for j in range(len(batch_texts)):
+            tokens = tokenizer.convert_ids_to_tokens(encoded['input_ids'][j])
+            embeddings = hidden_states[j].cpu().numpy()
+
+            word_embs = []
+            current_word = ""
+            current_vecs = []
+
+            for token, vec in zip(tokens, embeddings):
+                if token in ["[CLS]", "[SEP]", "[PAD]"]:
+                    continue
+                if token.startswith("##"):
+                    current_word += token[2:]
+                    current_vecs.append(vec)
+                else:
+                    if current_word and current_vecs:
+                        word_embs.append((current_word, np.mean(current_vecs, axis=0)))
+                    current_word = token
+                    current_vecs = [vec]
+
+            if current_word and current_vecs:
+                word_embs.append((current_word, np.mean(current_vecs, axis=0)))
+
+            all_word_embeddings.append(dict(word_embs))
+
+        torch.cuda.empty_cache()
+    return all_word_embeddings
 
 
 input_csv = "./data/reddit_sample.csv"
-output_dir = "./data/reddit_bert_chunks"
-final_csv = "./data/reddit_distilbert_embeddings.csv"
+output_dir = "./data/reddit_word_chunks"
 os.makedirs(output_dir, exist_ok=True)
 
-chunksize = 50000 
+chunksize = 20000
 reader = pd.read_csv(input_csv, chunksize=chunksize)
+global_offset = 0
 
 for chunk_idx, chunk in enumerate(reader):
-    print(f"\n Processing chunk {chunk_idx+1}...")
+    print(f"\nProcessing chunk {chunk_idx + 1}...")
     chunk['body'] = chunk['body'].fillna('').astype(str)
     texts = chunk['body'].tolist()
+    word_emb_list = get_word_embeddings(texts, batch_size=16)
 
-    embeddings = get_bert_embeddings(texts, batch_size=64)
-    emb_df = pd.DataFrame(embeddings, columns=[f'emb_{i}' for i in range(embeddings.shape[1])])
+    rows = [
+        {"text_id": global_offset + i, "word": word, **{f"dim_{d}": emb[d] for d in range(len(emb))}}
+        for i, word_dict in enumerate(word_emb_list)
+        for word, emb in word_dict.items()
+    ]
+    df_out = pd.DataFrame(rows)
 
-    merged = pd.concat([chunk.reset_index(drop=True), emb_df.reset_index(drop=True)], axis=1)
+    part_path = os.path.join(output_dir, f"reddit_word_part{chunk_idx + 1}.csv")
+    df_out.to_csv(part_path, index=False)
+    print(f"Saved {len(df_out)} word embeddings → {part_path}")
 
+    global_offset += len(chunk)
 
-    part_path = os.path.join(output_dir, f"reddit_embeddings_part{chunk_idx+1}.csv")
-    merged.to_csv(part_path, index=False)
-    print(f"Saved {len(chunk)} rows → {part_path}")
-
-    torch.cuda.empty_cache()
-
-# careful !!! if memory issue, run another code. You have saved all the parts already.
-all_parts = [os.path.join(output_dir, f) for f in sorted(os.listdir(output_dir)) if f.endswith(".csv")]
-combined_df = pd.concat((pd.read_csv(f) for f in all_parts), ignore_index=True)
-combined_df.to_csv(final_csv, index=False)
