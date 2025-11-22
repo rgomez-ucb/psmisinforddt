@@ -215,3 +215,4 @@ reddit_comments.csv
 
 *.npy
 *.model
+data/PoliticalDiscussion_submissions
