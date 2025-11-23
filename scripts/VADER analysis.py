@@ -16,7 +16,7 @@ new_directory_path = "/Users/mshun/Desktop/class_project"  # Change this to your
 os.chdir(new_directory_path)
 
 # Load the dataset
-input_csv = "./reddit_sample.csv"
+input_csv = "./25_pct_merged_PoliticalDiscussion_comments.csv"
 df = pd.read_csv(input_csv)
 
 # VADER Sentiment Analysis
@@ -34,7 +34,7 @@ mean_vader_compound = df['vader_compound'].mean()
 print("Mean VADER Compound Score:", mean_vader_compound)
 
 # Save the result to a new CSV file
-output_csv = "./reddit_vader.csv"
+output_csv = "./25_pct_merged_PoliticalDiscussion_comments_vader.csv"
 df.to_csv(output_csv, index=False)
 print("VADER analysis completed and saved to", output_csv)
 
@@ -51,3 +51,4 @@ print("Sentiment classification added.")
 
 # Display the first few rows of the updated DataFrame
 print(df.head())
+
