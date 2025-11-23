@@ -34,6 +34,20 @@ mean_vader_compound = df['vader_compound'].mean()
 print("Mean VADER Compound Score:", mean_vader_compound)
 
 # Save the result to a new CSV file
-output_csv = "./data/reddit_vader.csv"
+output_csv = "./reddit_vader.csv"
 df.to_csv(output_csv, index=False)
 print("VADER analysis completed and saved to", output_csv)
+
+# Clasify sentiment based on compound score
+def classify_sentiment(compound_score):
+    if compound_score >= 0.05:
+        return 'Positive'
+    elif compound_score <= -0.05:
+        return 'Negative'
+    else:
+        return 'Neutral'
+df['vader_sentiment'] = df['vader_compound'].apply(classify_sentiment)
+print("Sentiment classification added.")
+
+# Display the first few rows of the updated DataFrame
+print(df.head())
