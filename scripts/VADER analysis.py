@@ -6,6 +6,9 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pandas as pd
 
+## If you haven't installed nltk, uncomment the following line to install it
+## py -m pip install nltk
+
 # Set working directory
 current_directory = os.getcwd()
 print(f"Current working directory (os.getcwd()): {current_directory}")
@@ -13,7 +16,7 @@ new_directory_path = "/Users/mshun/Desktop/class_project"  # Change this to your
 os.chdir(new_directory_path)
 
 # Load the dataset
-input_csv = "./data/reddit_sample.csv"
+input_csv = "./reddit_sample.csv"
 df = pd.read_csv(input_csv)
 
 # VADER Sentiment Analysis
