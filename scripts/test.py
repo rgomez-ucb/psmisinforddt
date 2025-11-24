@@ -12,7 +12,8 @@ import ollama
 
 input_csv = "./data/25_pct_merged_PoliticalDiscussion_comments.csv"
 df = pd.read_csv(input_csv)
-
+# have ollama standby at port 11434
+# change the model if you want
 client = ollama.Client(host='http://127.0.0.1:11434')
 def ollama_sentiment_analysis(text):
     prompt = f'''
@@ -25,7 +26,7 @@ def ollama_sentiment_analysis(text):
     content = response['choices'][0]['message']['content']
     return content
 
-# Apply VADER to the 'body' column
+# Apply LLM to the 'body' column
 df['llm_class'] = df['body'].apply(lambda x: ollama_sentiment_analysis(str(x)))
 
 
@@ -43,7 +44,7 @@ def ollama_sentiment_score(text):
     except ValueError:
         score = 0.0  # Default to neutral if parsing fails
     return score
-# Extract compound score
+# Calculate llm score
 df['llm_score'] = df['body'].apply(ollama_sentiment_score)
 
 # Print something :)
@@ -55,6 +56,5 @@ output_csv = "./25_pct_merged_PoliticalDiscussion_comments_llm.csv"
 df.to_csv(output_csv, index=False)
 print("LLM analysis completed and saved to", output_csv)
 
-# Clasify sentiment based on compound score
 
 
