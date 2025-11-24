@@ -61,6 +61,10 @@ y = df['score_comment']
 X = sm.add_constant(X)  # Adds a constant term to the predictor
 model = sm.OLS(y, X).fit()
 print(model.summary())
+# Output regression results to a text file
+with open("./vader_regression_results.txt", "w") as f:
+    f.write(model.summary().as_text())
+print("Regression analysis completed and results saved.")
 
 # Visualization
 sns.set(style="whitegrid")
