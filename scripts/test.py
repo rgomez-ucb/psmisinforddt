@@ -52,7 +52,7 @@ mean_llm_score = df['llm_score'].mean()
 print("Mean LLM Score:", mean_llm_score)
 
 # Save the result to a new CSV file
-output_csv = "./25_pct_merged_PoliticalDiscussion_comments_llm.csv"
+output_csv = "./data/25_pct_merged_PoliticalDiscussion_comments_llm.csv"
 df.to_csv(output_csv, index=False)
 print("LLM analysis completed and saved to", output_csv)
 
