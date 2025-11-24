@@ -10,7 +10,7 @@ import ollama
 ## py -m pip install nltk statsmodels seaborn
 
 
-input_csv = "./data/25_pct_merged_PoliticalDiscussion_comments.csv"
+input_csv = "./data/25_pct_merged_PoliticalDiscussion_comments_submissions_merged_25pct.csv"
 df = pd.read_csv(input_csv)
 # have ollama standby at port 11434
 # change the model if you want
@@ -23,11 +23,11 @@ def ollama_sentiment_analysis(text):
         messages=[{"role": "user", "content": prompt}],
         stream=False
     )
-    content = response['choices'][0]['message']['content']
+    content = response['message']['content']
     return content
 
 # Apply LLM to the 'body' column
-df['llm_class'] = df['body'].apply(lambda x: ollama_sentiment_analysis(str(x)))
+df['llm_class'] = df['body'].head(10).apply(lambda x: ollama_sentiment_analysis(x))
 
 
 def ollama_sentiment_score(text):
@@ -38,14 +38,14 @@ def ollama_sentiment_score(text):
         messages=[{"role": "user", "content": prompt}],
         stream=False
     )
-    content = response['choices'][0]['message']['content']
+    content = response['message']['content']
     try:
         score = float(content.strip())
     except ValueError:
         score = 0.0  # Default to neutral if parsing fails
     return score
 # Calculate llm score
-df['llm_score'] = df['body'].apply(ollama_sentiment_score)
+df['llm_score'] = df['body'].head(10).apply(ollama_sentiment_score)
 
 # Print something :)
 mean_llm_score = df['llm_score'].mean()
