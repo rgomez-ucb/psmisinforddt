@@ -5,9 +5,12 @@ import os
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pandas as pd
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-## If you haven't installed nltk, uncomment the following line to install it
-## py -m pip install nltk
+## If you haven't installed nltk ,statsmodels.api and seaborn, uncomment the following line to install it
+## py -m pip install nltk statsmodels seaborn
 
 # Set working directory
 current_directory = os.getcwd()
@@ -52,3 +55,22 @@ print("Sentiment classification added.")
 # Display the first few rows of the updated DataFrame
 print(df.head())
 
+# Regresion analysis related to VADER scores and the number of comments("score_comment")
+X = df['vader_compound']
+y = df['score_comment']
+X = sm.add_constant(X)  # Adds a constant term to the predictor
+model = sm.OLS(y, X).fit()
+print(model.summary())
+
+# Visualization
+sns.set(style="whitegrid")
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='vader_compound', y='score_comment', data=df)
+plt.title('VADER Compound Score vs. Number of Comments')
+plt.xlabel('VADER Compound Score')
+plt.ylabel('Number of Comments')
+output_png = "./vader_compound_vs_comments.png" # Output as a PNG file
+plt.savefig(output_png)
+print("Plot saved as", output_png)
+plt.show()
+print("Visualization completed.")
