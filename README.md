@@ -13,13 +13,14 @@ Shun, Ruben, Jiyang and Yucheng.
 
 ## Information
 This is the repository where we should work!  
-Our presentation day is December 1st.
+Our final presentation day is December 1st.
 
 ## Research Question
 How does misinformation circulate and engage communities across political subreddits on Reddit over time?
 
 ## Dataset
-Reddit  r/PoliticalDiscussion
+Reddit  r/PoliticalDiscussion  
+This dataset is quite large, so we will extract the data and reduce its size for analysis.
 
 ## What we did and plan to do
 1. TF-IDF
