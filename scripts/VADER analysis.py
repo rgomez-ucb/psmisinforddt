@@ -55,9 +55,9 @@ print("Sentiment classification added.")
 # Display the first few rows of the updated DataFrame
 print(df.head())
 
-# Regresion analysis related to VADER scores and the number of upvotes equivalent to a like or thumbs up("score_comment")
+# Regresion analysis related to VADER scores and the number of upvotes equivalent to a like or thumbs up("score_submission")
 X = df['vader_compound']
-y = df['score_comment']
+y = df['score_submission']
 X = sm.add_constant(X)  # Adds a constant term to the predictor
 model = sm.OLS(y, X).fit()
 print(model.summary())
@@ -69,7 +69,7 @@ print("Regression analysis completed and results saved.")
 # Visualization
 sns.set(style="whitegrid")
 plt.figure(figsize=(10, 6))
-sns.scatterplot(x='vader_compound', y='score_comment', data=df)
+sns.scatterplot(x='vader_compound', y='score_submission', data=df)
 plt.title('VADER Compound Score vs. Number of Upvotes')
 plt.xlabel('VADER Compound Score')
 plt.ylabel('Number of Upvotes')
