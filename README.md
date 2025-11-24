@@ -12,10 +12,22 @@ Shun, Ruben, Jiyang and Yucheng.
 - Yucheng Lu : Visualization lead
 
 ## Information
-This is the repository where we should work!
+This is the repository where we should work!  
+Our presentation day is December 1st.
 
 ## Research Question
-How does misinformation circulate and engage communities across political subreddits on Reddit over time?   
+How does misinformation circulate and engage communities across political subreddits on Reddit over time?
+
+## Dataset
+Reddit  r/PoliticalDiscussion
+
+## What we did and plan to do
+1. TF-IDF
+2. BERT topic: to categorize the posts and the comments.
+3.  Get the top posts then run VADER analysis  
+    - Do negative or positive posts get more feedback?
+4. Comparison models: Linear regression, SVM, RNN, CNN
+5. F1 score, confusion matrix, 
 
 ## Project Structure
 
@@ -90,4 +102,3 @@ This project is structured with the following directory layout:
     \---__pycache__
             __init__.cpython-313.pyc
 ```
-
