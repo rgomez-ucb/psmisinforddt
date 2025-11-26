@@ -217,3 +217,5 @@ reddit_comments.csv
 *.model
 data/PoliticalDiscussion_submissions
 *.jsonl
+*.zst
+data/reddit/subreddits24/PoliticalDiscussion_comments.zst
