@@ -20,9 +20,9 @@ def convert_log_coef_to_percent_change(df_data, coef_col='Coefficient'):
 
 # Prapare the dataset for plotting
 data_for_plot = {
-    'Variable': ['vader_compound', 'Topic_7 (Abortion)', 'Topic_9 (Gun Control)', 'Topic_13 (International Relations)'],
-    'Coefficient': [5.8539, 0.1057, -0.2242, -0.1448], 
-    'Std.Err.': [0.018, 0.044, 0.048, 0.057] 
+    'Variable': ['vader_compound', 'Topic_7 (Abortion)', 'Topic_9 (Gun Control)', 'Topic_13 (International Relations)', "Topic_15(2016 Election)", "Topic_16(Student Loans)"],
+    'Coefficient': [5.8539, 0.1057, -0.2242, -0.1448, -0.1664, 0.1644], 
+    'Std.Err.': [0.018, 0.044, 0.048, 0.057 ,0.061, 0.067] 
 }
 df_plot = pd.DataFrame(data_for_plot).set_index('Variable')
 
@@ -44,21 +44,23 @@ data_for_graph = {
         'Topic 7: Abortion', 
         'Topic 9: Gun Control', 
         'Topic 13: Intl. Relations',
+        "Topic 15: 2016 Election",
+        "Topic 16: Student Loans"
     ],
-    'Percent_Change': [11.148838, -20.084471, -13.480469], 
-    'Effect': ['Promotion', 'Suppression', 'Suppression']
+    'Percent_Change': [11.148838, -20.084471, -13.480469, -15.329252, 17.868570], 
+    'Effect': ['Promotion', 'Suppression', 'Suppression', 'Suppression', 'Promotion']
 }
 df_plot_final = pd.DataFrame(data_for_graph).set_index('Topic')
 
-# Set colors based on effect
-colors = ['royalblue' if c > 0 else 'firebrick' for c in df_plot_final['Percent_Change']]
 
 # Sort by absolute value of impact (strongest impact at the top)
-df_plot_final['Abs_Percent_Change'] = df_plot_final['Percent_Change'].abs()
 df_plot_final = df_plot_final.sort_values(
-    by='Abs_Percent_Change', 
-    ascending=True 
+    by='Percent_Change', 
+    ascending=False
 ).copy()
+
+# Set colors based on effect
+colors = ['royalblue' if c > 0 else 'firebrick' for c in df_plot_final['Percent_Change']]
 
 # Create horizontal bar chart
 plt.style.use('seaborn-v0_8-whitegrid')
