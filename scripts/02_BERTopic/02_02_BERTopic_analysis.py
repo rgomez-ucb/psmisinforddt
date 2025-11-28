@@ -80,6 +80,8 @@ print(model.summary())
 # Save regression results to text file
 with open("bertopic_regression_summary.txt", "w") as f:
     f.write(model.summary().as_text())
+# Save the dataframe with topics to CSV
+df_reg.to_csv("bertopic_regression_data.csv", index=False)
 
 # Futhure analysis : Interaction regression with sentiment("vader_compound")
 import statsmodels.formula.api as smf
