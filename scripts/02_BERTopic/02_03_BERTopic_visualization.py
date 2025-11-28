@@ -80,8 +80,9 @@ ax.set_xlabel('Percent Change in Upvotes (%)', fontsize=12)
 ax.set_ylabel(None)
 
 plt.tight_layout()
-plt.show() 
 
 # Save for presentation
 plt.savefig('topic_engagement_contrast_final.png', dpi=300)
 print("✅ Final graph saved: topic_engagement_contrast_final.png")
+
+plt.show() 
