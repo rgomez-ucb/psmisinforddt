@@ -47,9 +47,32 @@ topic_model = BERTopic(
 )
 
 # Extract topics
-print("Extracting topics...")
+print("\n--- Starts to extract topic assignments and save model ---")
 topics, probs = topic_model.fit_transform(texts)
 print("Topic extraction completed.")
 
-topic_model.save("final_bertopic_model")
-print("Saved BERTopic model as 'final_bertopic_model'.")
+# Assign topics to the original dataframe
+df['topic_id'] = topics
+
+# Save the BERTopic model
+MODEL_SAVE_PATH = "final_bertopic_model"
+topic_model.save(MODEL_SAVE_PATH)
+print(f"✅ Saved BERTopic model successfully to: '{MODEL_SAVE_PATH}'")
+
+# Save the dataframe with topics to CSV
+DATA_SAVE_PATH = "PoliticalDiscussion_with_vader_bertopic.csv"
+df.to_csv(DATA_SAVE_PATH, index=False)
+print(f"✅ Final data with topic IDs saved to: '{DATA_SAVE_PATH}'")
+
+# Extract topic information such as ID, size, and keywords as a DataFrame
+try:
+    topic_model = BERTopic.load(MODEL_SAVE_PATH)
+    print("✅ Successfully loaded BERTopic model for topic info extraction.")
+    OUTPUT_CSV_PATH = "bertopic_topic_info.csv"
+    topic_info_df = topic_model.get_topic_info()
+    print(f"✅ Number of topics: {len(topic_info_df)}")
+    # Save topic information to CSV
+    topic_info_df.to_csv(OUTPUT_CSV_PATH, index=False)
+    print(f"✅ Successfully saved topic information table to CSV: {OUTPUT_CSV_PATH}")
+except Exception as e:
+    print(f"❌ Failed to extract BERTopic information. Error: {e}")

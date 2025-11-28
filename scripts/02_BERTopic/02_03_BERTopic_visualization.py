@@ -13,63 +13,85 @@ print(f"Current working directory (os.getcwd()): {current_directory}")
 new_directory_path = "/Users/mshun/Desktop/class_project"  # Change this to your target directory
 os.chdir(new_directory_path)
 
+# Load regression results
+results_csv_path = "regression_coefficients_with_pvalue.csv"
+df_results = pd.read_csv(results_csv_path, index_col=0)
+
+# Assing raw and column names for clarity
+COMPOUND_INDEX_NAME = 'vader_compound'
+COEF_COL = 'Coef.'
+P_VALUE_COL = 'P>|t|'
+
+df_final_coef = df_results[
+    (df_results.index.str.startswith('Topic_') & df_results.index.str.endswith('[T.True]')) |
+    (df_results.index == COMPOUND_INDEX_NAME) 
+].copy()
+
+# Filter for statistically significant results (p < 0.05)
+df_sig = df_final_coef[df_final_coef[P_VALUE_COL] < 0.05].copy()
+print("✅ Completed filtering significant variables (topics/sentiments) with p < 0.05")
+print(f"Number of significant variables (topics/sentiments) extracted: {len(df_sig)}")
+
+# Output the significant topics with their coefficients and p-values
+df_sig_sorted = df_sig.sort_values(by=COEF_COL, ascending=True)
+
+print("\n--- Final Presentation: Significant Topics List (Sorted by Impact) ---")
+print(df_sig_sorted[[COEF_COL, P_VALUE_COL]])
+
+# Save the significant topics to CSV
+df_sig_sorted.to_csv("significant_topics_percent_change.csv", index=True)
+print("✅ Significant topics saved to CSV: significant_topics_percent_change.csv")
+
 # Create a function to convert log-transformed coefficients to percent change
-def convert_log_coef_to_percent_change(df_data, coef_col='Coefficient'):
+def convert_log_coef_to_percent_change(df_data, coef_col=COEF_COL):
     percent_change = (np.exp(df_data[coef_col]) - 1) * 100
     return percent_change
 
-# Prapare the dataset for plotting
-data_for_plot = {
-    'Variable': ['vader_compound', 'Topic_7 (Abortion)', 'Topic_9 (Gun Control)', 'Topic_13 (International Relations)', "Topic_15(2016 Election)", "Topic_16(Student Loans)"],
-    'Coefficient': [5.8539, 0.1057, -0.2242, -0.1448, -0.1664, 0.1644], 
-    'Std.Err.': [0.018, 0.044, 0.048, 0.057 ,0.061, 0.067] 
+# Apply the conversion function to significant topics
+df_sig_sorted['Percent_Change'] = convert_log_coef_to_percent_change(df_sig_sorted, coef_col=COEF_COL)
+
+# Extract indices of significant topics for labeling
+SIGNIFICANT_INDICES = [
+    'compound', 
+    'Topic_7[T.True]', 'Topic_26[T.True]', 'Topic_28[T.True]', 
+    'Topic_9[T.True]', 'Topic_14[T.True]', 'Topic_15[T.True]', 'Topic_16[T.True]', 'Topic_21[T.True]' 
+]
+
+# Define mapping for better topic names
+TOPIC_MAPPING = {
+    'compound': 'Universal Sentiment Score',
+    'Topic_7[T.True]': 'Topic 7: Abortion',
+    'Topic_26[T.True]': 'Topic 26: Crime & Policing',
+    'Topic_28[T.True]': 'Topic 28: Impeachment',
+    'Topic_9[T.True]': 'Topic 9: Gun Control',
+    'Topic_14[T.True]': 'Topic 14: Figurehead Rivalry',
+    'Topic_15[T.True]': 'Topic 15: International Relations',
+    'Topic_16[T.True]': 'Topic 16: Expired Election',
+    'Topic_21[T.True]': 'Topic 21: Israel/Conflict',
 }
-df_plot = pd.DataFrame(data_for_plot).set_index('Variable')
 
+# Map topic names for better readability
+df_plot = df_sig_sorted[df_sig_sorted.index.isin(SIGNIFICANT_INDICES)].copy()
 
-# Apply the conversion function
-df_plot['Percent_Change'] = convert_log_coef_to_percent_change(
-    df_plot, 
-    coef_col='Coefficient'
-)
+# Add display names for plotting
+df_plot['Display_Name'] = df_plot.index.map(TOPIC_MAPPING)
 
-# Print the final results
-print("--- Final Results: Percent Change in Upvotes (%) ---")
-print(df_plot[['Coefficient', 'Percent_Change']])
+# Sort the final dataframe for plotting
+df_plot_final = df_plot.sort_values(by='Percent_Change', ascending=True)
 
+# Visualization: Bar chart of significant topics
 print("=== Generating Bar Chart for Topic Coefficients ===")
 
-data_for_graph = {
-    'Topic': [
-        'Topic 7: Abortion', 
-        'Topic 9: Gun Control', 
-        'Topic 13: Intl. Relations',
-        "Topic 15: 2016 Election",
-        "Topic 16: Student Loans"
-    ],
-    'Percent_Change': [11.148838, -20.084471, -13.480469, -15.329252, 17.868570], 
-    'Effect': ['Promotion', 'Suppression', 'Suppression', 'Suppression', 'Promotion']
-}
-df_plot_final = pd.DataFrame(data_for_graph).set_index('Topic')
+plt.style.use('seaborn-v0_8-whitegrid')
+fig, ax = plt.subplots(figsize=(10, 6))
 
-
-# Sort by absolute value of impact (strongest impact at the top)
-df_plot_final = df_plot_final.sort_values(
-    by='Percent_Change', 
-    ascending=False
-).copy()
-
-# Set colors based on effect
+# Set bar colors based on positive or negative impact
 colors = ['royalblue' if c > 0 else 'firebrick' for c in df_plot_final['Percent_Change']]
 
-# Create horizontal bar chart
-plt.style.use('seaborn-v0_8-whitegrid')
-fig, ax = plt.subplots(figsize=(9, 5))
-
-# Draw bar chart
-df_plot_final['Percent_Change'].plot(
-    kind='barh', 
-    ax=ax, 
+# Draw horizontal bar chart
+ax.barh(
+    df_plot_final['Display_Name'], 
+    df_plot_final['Percent_Change'], 
     color=colors
 )
 
