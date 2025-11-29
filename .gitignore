@@ -210,9 +210,6 @@ reddit_comments.csv
 #sqlthing
 *.db
 
-# csv
-*.csv
-
 *.npy
 *.model
 data/PoliticalDiscussion_submissions
