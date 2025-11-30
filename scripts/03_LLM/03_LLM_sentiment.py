@@ -2,21 +2,17 @@ import os
 import pandas as pd
 import ollama
 
-# Load data
 input_csv = "./data/01_VADER/25_pct_merged_PoliticalDiscussion_comments_vader.csv"
 df = pd.read_csv(input_csv)
-print(df.info())
-# Ollama client
+
 client = ollama.Client(host='http://127.0.0.1:11434')
 
-# --- Combined Sentiment Function ---
 def ollama_sentiment(text):
     prompt = f"""
     Analyze the sentiment of the following text.
-
     1. Give a sentiment label: Positive, Negative, or Neutral.
-    2. Provide a sentiment score between -1 (very negative) and 1 (very positive).
-    3. Output strictly in the format:
+    2. Provide a sentiment score between -1 and 1.
+    3. Output strictly:
     LABEL: <label>
     SCORE: <score>
 
@@ -24,17 +20,15 @@ def ollama_sentiment(text):
     """
 
     response = client.chat(
-        model="qwen3:8b",
+        model="llama3.1",
         messages=[{"role": "user", "content": prompt}],
         stream=False
     )
 
     content = response["message"]["content"]
 
-    # --- Extract fields ---
-    label = "Neutral"
-    score = 0.0
-
+    # Parse
+    label, score = "Neutral", 0.0
     for line in content.split("\n"):
         line = line.strip()
         if line.lower().startswith("label:"):
@@ -48,13 +42,20 @@ def ollama_sentiment(text):
     return pd.Series([label, score])
 
 
-# Apply to first 10 rows
-df[["llm_label", "llm_score"]] = df["body"].head(10).apply(ollama_sentiment)
+# --- APPLY with simple progress logging ---
+results = []
+for i, text in df["body"].items():
 
-# Show mean score
-print("Mean LLM Score (first 10 rows):", df["llm_score"].mean())
+    # every 100 rows, print progress
+    if i % 100 == 0:
+        print(f"Processing row {i}...")
 
-# Save output
-output_csv = "./data/25_pct_merged_PoliticalDiscussion_comments_llm.csv"
+    results.append(ollama_sentiment(text))
+
+
+df[["llm_label", "llm_score"]] = pd.DataFrame(results)
+
+output_csv = "./data/01_VADER/25_pct_merged_PoliticalDiscussion_comments_llm.csv"
 df.to_csv(output_csv, index=False)
-print("LLM analysis completed and saved to", output_csv)
+
+print("\nDONE. Saved to:", output_csv)
