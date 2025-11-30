@@ -1,0 +1,25 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:       score_submission   R-squared:                       0.000
+Model:                            OLS   Adj. R-squared:                 -0.000
+Method:                 Least Squares   F-statistic:                    0.5098
+Date:                Sat, 29 Nov 2025   Prob (F-statistic):              0.475
+Time:                        23:00:50   Log-Likelihood:            -1.3481e+05
+No. Observations:               16736   AIC:                         2.696e+05
+Df Residuals:                   16734   BIC:                         2.696e+05
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const        490.7176      7.331     66.940      0.000     476.349     505.086
+llm_score     -6.8536      9.599     -0.714      0.475     -25.669      11.962
+==============================================================================
+Omnibus:                    31854.600   Durbin-Watson:                   1.988
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):         74906504.535
+Skew:                          14.701   Prob(JB):                         0.00
+Kurtosis:                     329.426   Cond. No.                         2.10
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

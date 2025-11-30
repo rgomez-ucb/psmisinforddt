@@ -9,10 +9,9 @@ client = ollama.Client(host='http://127.0.0.1:11434')
 
 def ollama_sentiment(text):
     prompt = f"""
-    Analyze the sentiment of the following text.
-    1. Give a sentiment label: Positive, Negative, or Neutral.
-    2. Provide a sentiment score between -1 and 1.
-    3. Output strictly:
+    Classify the sentiment as Positive, Negative, or Neutral.
+    Give a score between -1 and 1.
+    Format:
     LABEL: <label>
     SCORE: <score>
 
@@ -22,6 +21,10 @@ def ollama_sentiment(text):
     response = client.chat(
         model="llama3.1",
         messages=[{"role": "user", "content": prompt}],
+        options={
+            "num_predict": 30,    
+            "temperature": 0.0, 
+        },
         stream=False
     )
 
@@ -47,7 +50,7 @@ results = []
 for i, text in df["body"].items():
 
     # every 100 rows, print progress
-    if i % 100 == 0:
+    if i % 10 == 0:
         print(f"Processing row {i}...")
 
     results.append(ollama_sentiment(text))

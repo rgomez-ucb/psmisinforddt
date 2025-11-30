@@ -217,3 +217,4 @@ data/PoliticalDiscussion_submissions
 *.zst
 data/reddit/subreddits24/PoliticalDiscussion_comments.zst
 data/25_pct_merged_PoliticalDiscussion_comments_llm.csv
+data/01_VADER/25_pct_merged_PoliticalDiscussion_comments_llm.csv
