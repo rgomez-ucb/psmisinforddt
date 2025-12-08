@@ -53,21 +53,24 @@ df_sig_sorted['Percent_Change'] = convert_log_coef_to_percent_change(df_sig_sort
 # Extract indices of significant topics for labeling
 SIGNIFICANT_INDICES = [
     'compound', 
-    'Topic_7[T.True]', 'Topic_26[T.True]', 'Topic_28[T.True]', 
-    'Topic_9[T.True]', 'Topic_14[T.True]', 'Topic_15[T.True]', 'Topic_16[T.True]', 'Topic_21[T.True]' 
+    'Topic_3[T.True]', 'Topic_6[T.True]','Topic_10[T.True]','Topic_17[T.True]','Topic_29[T.True]', 
+    'Topic_1[T.True]', 'Topic_7[T.True]', 'Topic_13[T.True]', 'Topic_15[T.True]','Topic_16[T.True]','Topic_25[T.True]'
 ]
 
 # Define mapping for better topic names
 TOPIC_MAPPING = {
     'compound': 'Universal Sentiment Score',
-    'Topic_7[T.True]': 'Topic 7: Abortion',
-    'Topic_26[T.True]': 'Topic 26: Crime & Policing',
-    'Topic_28[T.True]': 'Topic 28: Impeachment',
-    'Topic_9[T.True]': 'Topic 9: Gun Control',
-    'Topic_14[T.True]': 'Topic 14: Figurehead Rivalry',
-    'Topic_15[T.True]': 'Topic 15: International Relations',
+    "Topic_3[T.True]": 'Topic 3: Investigation',
+    'Topic_6[T.True]': 'Topic 6: Abortion',
+    'Topic_10[T.True]': 'Topic 10: Supreme Court',
+    'Topic_17[T.True]': 'Topic 17: Student Debt',
+    'Topic_29[T.True]': 'Topic 29: Crime & Policing',
+    'Topic_1[T.True]': 'Topic 1: Fiscal Policy',
+    'Topic_7[T.True]': 'Topic 7: Gun Control',
+    'Topic_13[T.True]': 'Topic 13: International Relations',
+    'Topic_15[T.True]': 'Topic 15: Figurehead Rivalry',
     'Topic_16[T.True]': 'Topic 16: Expired Election',
-    'Topic_21[T.True]': 'Topic 21: Israel/Conflict',
+    'Topic_25[T.True]': 'Topic 25: Israel/Conflict',
 }
 
 # Map topic names for better readability

@@ -10,6 +10,7 @@ print("-------------------------------------")
 
 # Import necessary libraries
 import os
+import nltk
 import pandas as pd
 import numpy as np
 from umap import UMAP
@@ -17,6 +18,8 @@ from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
 import hdbscan
 import statsmodels.formula.api as smf
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import CountVectorizer
 
 # Set working directory
 current_directory = os.getcwd()
@@ -36,10 +39,30 @@ embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 # random_state for reproducibility
 umap_model = UMAP(random_state=42)
 
+# Create stop words to HDBSCAN
+english_stopwords = stopwords.words('english')
+# Add custom noise words relevant to Reddit political discussions
+custom_noise = [
+    # Names of politicians
+    'trump', 'biden', 
+    # Reddit-specific noise
+    'reddit', 'user', 'post', 'comment', 'thread', 
+    # Opinion expression/general political terms
+    'politic', 'government', 'state', 'country', 'said', 'agree', 'believe', 'opinion', 
+    # Common verbs/pronouns
+    'say', 'think', 'just', 'like', 'know', 'people', 
+]
+custom_stopwords_list = english_stopwords + custom_noise
+
+# Define a Vectorizer model with applied stop words
+vectorizer_model = CountVectorizer(
+    stop_words=custom_stopwords_list 
+)
+
 # Initialize BERTopic with custom parameters
 topic_model = BERTopic(
     embedding_model=embedding_model,
-    language="english",        
+    vectorizer_model=vectorizer_model,        
     calculate_probabilities=True,
     verbose=True,
     min_topic_size=50,
