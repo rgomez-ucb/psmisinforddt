@@ -1,7 +1,7 @@
 import pandas as pd
 # CHANGE FILEPATH
-jsonl_file = "./data/PoliticalDiscussion_cleaned_submissions.jsonl"
-csv_file = "./data/reddit_submissions.csv"
+jsonl_file = ".././data/PoliticalDiscussion_cleaned_submissions.jsonl"
+csv_file = ".././data/reddit_submissions.csv"
 
 
 chunksize = 100000

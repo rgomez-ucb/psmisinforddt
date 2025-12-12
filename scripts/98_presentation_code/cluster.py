@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 
 
-file_path = "./data/reddit_embeddings_all.csv"
+file_path = ".././data/reddit_embeddings_all.csv"
 sample_df = pd.read_csv(file_path, nrows=10000)
 
 

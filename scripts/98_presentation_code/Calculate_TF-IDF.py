@@ -15,7 +15,7 @@ new_directory_path = "/Users/mshun/Desktop/class_project"  # Change this to your
 os.chdir(new_directory_path)
 '''
 # Load the dataset
-input_csv = "./data/reddit_sample.csv"
+input_csv = ".././data/reddit_sample.csv"
 df = pd.read_csv(input_csv)
 
 # Initialize the TF-IDF Vectorizer
@@ -53,6 +53,6 @@ print("Top 20 words by TF-IDF:")
 print(mean_tfidf.head(20))
 
 # Save the result to a new CSV file
-output_csv = "./data/reddit_tfidf.csv"
+output_csv = ".././data/reddit_tfidf.csv"
 result_df.to_csv(output_csv, index=False)
 print("TF-IDF calculation completed and saved to", output_csv)

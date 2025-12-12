@@ -1,6 +1,6 @@
 import pandas as pd
 
-submissions = pd.read_csv("./data/reddit_submissions.csv", low_memory=False)
+submissions = pd.read_csv(".././data/reddit_submissions.csv", low_memory=False)
 
 
 
@@ -29,6 +29,6 @@ merged = final_submissions.merge(
 )
 
 # Save result
-merged.to_csv("./data/merged.csv", index=False, encoding="utf-8-sig")
+merged.to_csv(".././data/merged.csv", index=False, encoding="utf-8-sig")
 
 print("finished")

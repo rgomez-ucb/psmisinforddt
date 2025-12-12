@@ -1,7 +1,7 @@
 import os
 import pandas as pd
-output_dir = "./data/reddit_bert_chunks"
-final_csv = "./data/reddit_embeddings_all.csv"
+output_dir = ".././data/reddit_bert_chunks"
+final_csv = ".././data/reddit_embeddings_all.csv"
 
 all_parts = [
     os.path.join(output_dir, f)

@@ -10,7 +10,7 @@ import ollama
 ## py -m pip install nltk statsmodels seaborn
 
 
-input_csv = "./data/25_pct_merged_PoliticalDiscussion_comments_submissions_merged_25pct.csv"
+input_csv = ".././data/25_pct_merged_PoliticalDiscussion_comments_submissions_merged_25pct.csv"
 df = pd.read_csv(input_csv)
 # have ollama standby at port 11434
 # change the model if you want
@@ -52,7 +52,7 @@ mean_llm_score = df['llm_score'].mean()
 print("Mean LLM Score:", mean_llm_score)
 
 # Save the result to a new CSV file
-output_csv = "./data/25_pct_merged_PoliticalDiscussion_comments_llm.csv"
+output_csv = ".././data/25_pct_merged_PoliticalDiscussion_comments_llm.csv"
 df.to_csv(output_csv, index=False)
 print("LLM analysis completed and saved to", output_csv)
 

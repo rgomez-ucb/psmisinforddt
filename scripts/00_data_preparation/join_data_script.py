@@ -1,12 +1,11 @@
 import os
 import pandas as pd
 
-comments_polidisc = "data/PoliticalDiscussion_comments_sample.csv"
-submissions_polidisc = "data/PoliticalDiscussion_submissions_sample.csv"
+comments_polidisc = ".././data/PoliticalDiscussion_comments_sample.csv"
+submissions_polidisc = ".././data/PoliticalDiscussion_submissions_sample.csv"
 
-merged_comments_submissions_politicaldiscussion = "merged_PoliticalDiscussion_comments_submissions.csv"
-sample_comments_submissions_politicaldiscussion = "25_pct_merged_PoliticalDiscussion_comments_submissions_merged_25pct.csv"
-
+merged_comments_submissions_politicaldiscussion = ".././data/merged_PoliticalDiscussion_comments_submissions.csv"
+sample_comments_submissions_politicaldiscussion = ".././data/25_pct_merged_PoliticalDiscussion_comments_submissions_merged_25pct.csv"
 print("Reading CSV files...")
 comments_df = pd.read_csv(comments_polidisc)
 submissions_df = pd.read_csv(submissions_polidisc)

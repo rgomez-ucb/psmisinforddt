@@ -1,8 +1,8 @@
 import json
 #change the path to your own path
 #get the data from using the torrent
-input_path = "./data/PoliticalDiscussion_submissions"
-output_path = "./data/PoliticalDiscussion_cleaned_submissions.jsonl"
+input_path = ".././data/PoliticalDiscussion_submissions"
+output_path = ".././data/PoliticalDiscussion_cleaned_submissions.jsonl"
 
 # thing we want to keep
 fields = ["id", "created_utc", "title", "selftext", "ups","downs"]

@@ -53,8 +53,8 @@ def get_word_embeddings(texts, batch_size=32, max_length=128):
     return all_word_embeddings
 
 
-input_csv = "./data/reddit_sample.csv"
-output_dir = "./data/reddit_word_chunks"
+input_csv = ".././data/reddit_sample.csv"
+output_dir = ".././data/reddit_word_chunks"
 os.makedirs(output_dir, exist_ok=True)
 
 chunksize = 20000

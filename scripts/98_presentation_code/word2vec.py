@@ -6,7 +6,7 @@ from gensim.models import Word2Vec
 
 
 
-df = pd.read_csv("./data/reddit_sample.csv")
+df = pd.read_csv(".././data/reddit_sample.csv")
 
 
 texts = df["body"].fillna("").astype(str).tolist()
@@ -31,6 +31,5 @@ model = Word2Vec(
 )
 
 
-model.save("./data/reddit_word2vec.model")
-model.wv.save_word2vec_format("./data/reddit_word2vec.txt")
-
+model.save(".././data/reddit_word2vec.model")
+model.wv.save_word2vec_format(".././data/reddit_word2vec.txt")
