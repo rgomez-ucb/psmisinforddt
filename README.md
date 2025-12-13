@@ -68,13 +68,11 @@ This project is structured with the following directory layout:
 │  ├─98_presentation_code
 │  └─99_Practice
 └─src
-    ├─reddit_data
-    └─__pycache__
 ```
 **Directory Details**
 - **data/**  
-Stores all pre-processed data used for analysis, as well as the final results, including statistical outputs and visualizations (e.g., coefficient plots).
-- **scripts/**  
-Contains Python code files necessary to execute each stage of the analysis, such as data cleaning, model training, and evaluation.
+Stores all pre-processed data used for analysis, as well as the final results, including statistical outputs and visualizations (e.g., coefficient plots).  
 - **notebooks/**  
 Contains the Jupyter Notebook files used specifically for model comparison and the creation of presentation materials.
+- **scripts/**  
+Contains Python code files necessary to execute each stage of the analysis, such as data cleaning, model training, and evaluation.
