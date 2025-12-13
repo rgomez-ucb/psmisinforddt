@@ -1,0 +1,132 @@
+
+„   .DS_Store
+„   .gitignore
+„   environment.yml
+„   political-misinfo-reddit-data.toml
+„   project_structure.txt
+„   README.md
+„   
+„¥„Ÿ.devcontainer
+„       devcontainer.json
+„       
+„¥„Ÿ.vscode
+„       settings.json
+„       
+„¥„Ÿdata
+„   „   .DS_Store
+„   „   .gitkeep
+„   „   .Rhistory
+„   „   reddit-1614740ac8c94505e4ecb9d88be8bed7b6afddd4.torrent
+„   „   
+„   „¥„Ÿ00_1_cluster
+„   „       word2vec_clusters.png
+„   „       
+„   „¥„Ÿ00_TF-IDF
+„   „       .DS_Store
+„   „       don_trump_highlighted.png
+„   „       people_highlighted_term.png
+„   „       tf-idf-score.png
+„   „       tfidf_top20_interactive.html
+„   „       tfidf_viz.ipynb
+„   „       
+„   „¥„Ÿ01_VADER
+„   „       25_pct_merged_PoliticalDiscussion_comments_vader.csv
+„   „       vader_compound_vs_upvotes.png
+„   „       vader_regression_results.txt
+„   „       
+„   „¥„Ÿ02_BERTopic_results
+„   „       bertopic_assigned_posts_cleaned.csv
+„   „       bertopic_regression_data.csv
+„   „       bertopic_regression_summary.txt
+„   „       bertopic_topic_info_summary.csv
+„   „       PoliticalDiscussion_with_vader_bertopic.csv
+„   „       PoliticalDiscussion_with_vader_bertopic_test_set.csv
+„   „       PoliticalDiscussion_with_vader_bertopic_train_set.csv
+„   „       regression_coefficients_with_pvalue.csv
+„   „       significant_topics_percent_change.csv
+„   „       topic_engagement_contrast_final.png
+„   „       
+„   „¥„Ÿ03_llm
+„   „       llm_regression_results.txt
+„   „       llm_scorevs_upvotes.png
+„   „       PoliticalDiscussion_with_llm_labels.csv
+„   „       PoliticalDiscussion_with_llm_labels_cleaned_output.csv
+„   „       PoliticalDiscussion_with_llm_labels_test.csv
+„   „       PoliticalDiscussion_with_llm_labels_train.csv
+„   „       
+„   „¤„Ÿ99_Exploratory Data Analysis
+„           reddit_politicaldisscussion_linechart.html
+„           reddit_politicaldisscussion_linechart.Rmd
+„           reddit_rpoliticaldiscussion_linechart.R
+„           reddit_rPoliticalDiscussion_YoY.jpeg
+„           Rplot.jpeg
+„           Rplot01.jpeg
+„           
+„¥„Ÿnotebooks
+„   „   .gitkeep
+„   „   
+„   „¥„ŸModel Comparison
+„   „       BERT_fine_tuned.ipynb
+„   „       Complement Naive Bayes.ipynb
+„   „       Logistic Regression.ipynb
+„   „       SVM.ipynb
+„   „       
+„   „¤„Ÿpresentation_notebooks
+„           analysis_BERTtopics_vader.ipynb
+„           presentation 2 codes.ipynb
+„           presentation 2.ipynb
+„           
+„¥„Ÿscripts
+„   „   .gitkeep
+„   „   
+„   „¥„Ÿ00_data_preparation
+„   „       combine_embedding.py
+„   „       join_data_script.py
+„   „       merging.py
+„   „       posts_clean.py
+„   „       random_split.py
+„   „       submission2csv.py
+„   „       submission_clean.py
+„   „       to_csv.py
+„   „       
+„   „¥„Ÿ01_VADER_analysis
+„   „       VADER analysis.py
+„   „       
+„   „¥„Ÿ02_BERTopic
+„   „       02_01_BERTopic_extraction.py
+„   „       02_02_BERTopic_analysis.py
+„   „       02_03_BERTopic_visualization.py
+„   „       
+„   „¥„Ÿ03_LLM
+„   „       03_LLM_sentiment.py
+„   „       LLM_misinformation.py
+„   „       LLM_sentiment_viz.py
+„   „       test.py
+„   „       
+„   „¥„Ÿ98_presentation_code
+„   „       bert.py
+„   „       Calculate_TF-IDF.py
+„   „       cluster.py
+„   „       word2vec.py
+„   „       
+„   „¤„Ÿ99_Practice
+„           hello_Shun.py
+„           jiyang.py
+„           juan-ruben.gomez.py
+„           
+„¤„Ÿsrc
+    „   .DS_Store
+    „   data_pipeline.py
+    „   
+    „¥„Ÿreddit_data
+    „   „   mymodule.py
+    „   „   tfidf_top20_interactive.html
+    „   „   utils.py
+    „   „   __init__.py
+    „   „   
+    „   „¤„Ÿ__pycache__
+    „           utils.cpython-313.pyc
+    „           
+    „¤„Ÿ__pycache__
+            __init__.cpython-313.pyc
+            
