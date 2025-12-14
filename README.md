@@ -10,10 +10,6 @@ Shun, Ruben, Jiyang and Yucheng.
 - Juan Ruben Gomez : Exploratory research lead
 - Yucheng Lu : Visualization lead
 
-## Information
-This is the repository where we should work!  
-Our final presentation day is December 1st.
-
 ## Research Question
 How does misinformation circulate and engage communities across political subreddits on Reddit over time?
 
