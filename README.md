@@ -11,7 +11,7 @@ Shun, Ruben, Jiyang and Yucheng.
 - Yucheng Lu : Visualization lead
 
 ## Research Question
-How does misinformation circulate and engage communities across political subreddits on Reddit over time?
+We explore how misinformation circulate and engage communities across political subreddits on Reddit over time?
 
 ## Dataset
 Our analysis draws on posts and comments from **r/PoliticalDiscussion**, a large Reddit community with over 2.1 million members engaged in discourse about current events, political ideology, and a range of politicized topics. To ensure the dataset remained manageable we extracted a 25% stratified sample of available posts and comments.
